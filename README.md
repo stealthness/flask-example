@@ -13,16 +13,19 @@ Adding an about page, and some html tags [part 2 branch](https://github.com/stea
 In this part we have;
 - Adding an error page
 - Used templates 
+
 Link to [part 3 branch](https://github.com/stealthness/flask-example/tree/part3-basic-template-application)
 
 ## Part 4
 In this part we have;
 - Adding simple user page
 - Used `{% include <some.html' %}` to replace footer navigation bar with single html file
+
 Link to [part 4 branch](https://github.com/stealthness/flask-example/tree/part4-basic-template-application)
 
 ## Part 5
 In this part we have
 - added DataManager class to handle a list of users
 - modified user page to check if user in list of user or redirect to error page
+
 - Link to [part 5 branch](https://github.com/stealthness/flask-example/tree/part5-basic-template-application)
