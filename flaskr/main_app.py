@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -16,6 +17,12 @@ def get_about_page():
 @app.route('/warn')
 def get_warning_page(message=''):
     return render_template('error_page.html', title='Error Page', message=message)
+
+
+@app.route('/user/<string:username>')
+def get_user_page(username):
+    safe_username = escape(username)
+    return render_template('user_page.html', title='User Page' ,username=safe_username)
 
 
 if __name__ == "__main__":
