@@ -13,6 +13,10 @@ def get_about_page():
     return render_template('about.html', title='Home Page')
 
 
+@app.route('/warn')
+def get_warning_page(message=''):
+    return render_template('error_page.html', title='Error Page', message=message)
+
 
 if __name__ == "__main__":
     # app.run()
