@@ -1,3 +1,5 @@
+from random import shuffle
+
 from flask import Flask, render_template, redirect, url_for
 from markupsafe import escape
 from flaskr.data_manager import SimpleDataManager
@@ -13,7 +15,12 @@ def get_home_page():
 
 @app.route('/about')
 def get_about_page():
-    return render_template('about.html', title='Home Page')
+    users = []
+    for _ in range(3):
+        shuffle(data.users)
+        users = data.users[:3]
+
+    return render_template('about.html', title='Home Page', users=users)
 
 
 @app.route('/warn')

@@ -4,6 +4,9 @@
     <h1>The Football Supporter Site - About Page</h1>
     <p>This flask example will create a football supporter site</p>
     <p>Test link to  <a href="/warn">error page</a></p>
-    <p>Test link to  <a href="/user/ant">Ant's page</a></p>
+    {% for user in users %}
+        <p>Test link to  <a href="/user/{{user}}">{{user.title()}}'s page</a></p>
+    {% endfor %}
+
     <p>Test link to  <a href="/user/kate">Kate's page</a> (redirect to the error page)</p>
 {% endblock %}
