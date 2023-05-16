@@ -14,3 +14,9 @@ In this part we have;
 - Adding an error page
 - Used templates 
 Link to [part 3 branch](https://github.com/stealthness/flask-example/tree/part3-basic-template-application)
+
+# Part 4
+In this part we have;
+- Adding simple user page
+- Used `{% include <some.html' %}` to replace footer navigation bar with single html file
+Link to [part 4 branch](https://github.com/stealthness/flask-example/tree/part4-basic-template-application)
