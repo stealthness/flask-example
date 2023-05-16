@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from markupsafe import escape
+from flaskr.data_manager import SimpleDataManager
 
 app = Flask(__name__)
-
+data = SimpleDataManager()
+data.load_users()
 
 @app.route('/')
 @app.route('/index')
@@ -21,7 +23,10 @@ def get_warning_page(message=''):
 
 @app.route('/user/<string:username>')
 def get_user_page(username):
-    safe_username = escape(username)
+    safe_username = escape(username).strip()
+    if not safe_username.title() in data.users:
+        return redirect(url_for('get_warning_page'))
+
     return render_template('user_page.html', title='User Page' ,username=safe_username)
 
 

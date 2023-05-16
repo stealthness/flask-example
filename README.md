@@ -20,3 +20,8 @@ In this part we have;
 - Adding simple user page
 - Used `{% include <some.html' %}` to replace footer navigation bar with single html file
 Link to [part 4 branch](https://github.com/stealthness/flask-example/tree/part4-basic-template-application)
+
+## Part 5
+In this part we have
+- added DataManager class to handle a list of users
+- modified user page to check if user in list of user or redirect to error page
