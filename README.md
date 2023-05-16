@@ -29,3 +29,10 @@ In this part we have
 - modified user page to check if user in list of user or redirect to error page
 
 - Link to [part 5 branch](https://github.com/stealthness/flask-example/tree/part5-basic-template-application)
+
+## Part 6
+In this part 
+- added stylesheet via a static file
+- change about to display three random user pages
+- added `base.html` template
+- - Link to [part 6 branch](https://github.com/stealthness/flask-example/tree/part6-using-base-template-application)
