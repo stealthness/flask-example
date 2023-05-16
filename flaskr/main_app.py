@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -6,15 +6,12 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def get_home_page():
-    return """<h1>The Football Supporter Site - Home Page</h1>
-    <p>Welcome to the football supporter site</p>
-    <p><a href='/index'>Home</a> | <a href='/about'>About</a></p>"""
+    return render_template('index.html', title='Home Page')
 
 @app.route('/about')
 def get_about_page():
-    return """<h1>The Football Supporter Site - About Page</h1>
-    <p>This flask example will create a football supporter site</p>
-    <p><a href='/index'>Home</a> | <a href='/about'>About</a></p>"""
+    return render_template('about.html', title='Home Page')
+
 
 
 if __name__ == "__main__":
