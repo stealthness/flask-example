@@ -32,10 +32,17 @@ def get_warning_page(message=''):
 @app.route('/user/<string:username>')
 def get_user_page(username):
     safe_username = escape(username).strip()
+    if safe_username == 'all_users':
+        return redirect(url_for("get_all_users_page"))
     if not safe_username.title() in data.users:
         return redirect(url_for('get_warning_page'))
 
     return render_template('user_page.html', title='User Page' ,username=safe_username)
+
+
+@app.route('/all_users')
+def get_all_users_page():
+    return render_template("all_users.html", title="All Users Page", users=data.users)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<div class="content">
+    {% include 'header.html' %}
 {% block content %} {% endblock %}
+</div>
 
 {% include 'footer_nav_bar.html' %}
 

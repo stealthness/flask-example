@@ -47,3 +47,7 @@ In this part
 - added intial user list store on a 'user_data.csv'
 - added simple unit test for 'data_manager'
 - Link to [part 7 branch](https://github.com/stealthness/flask-example/tree/part7-adding-csv-application)
+
+## Part 8
+In this part
+- a page to all users using a table, with added css to style the table
