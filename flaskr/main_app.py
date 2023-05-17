@@ -1,7 +1,7 @@
 import os
 from random import shuffle
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from markupsafe import escape
 from flaskr.data_manager import SimpleDataManager
 
@@ -9,9 +9,11 @@ app = Flask(__name__)
 data = SimpleDataManager()
 data.load_users(os.path.join('res', 'user_data.csv'))
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=(['POST', 'GET']))
+@app.route('/index', methods=(['POST', 'GET']))
 def get_home_page():
+    if request.method == 'POST':
+        print("<1>")
     return render_template('index.html', title='Home Page')
 
 @app.route('/about')

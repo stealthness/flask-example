@@ -8,6 +8,14 @@ This project was created to help student on AES course. Some small change that m
 to import `DataManager` by remove `flaskr.` from module address. This is becuase the root of the PyCharm project is one level above the root of a 
 codio VM box.
 
+## Part 9
+In this Part
+-
+
+Link to [part 9 branch](https://github.com/stealthness/flask-example/tree/part9-adding-form-application)
+
+
+
 ## Part 8
 In this part
 - a page to all users using a table, with added css to style the table
