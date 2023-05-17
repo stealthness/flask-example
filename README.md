@@ -33,21 +33,26 @@ In this part we have
 - added DataManager class to handle a list of users
 - modified user page to check if user in list of user or redirect to error page
 
-- Link to [part 5 branch](https://github.com/stealthness/flask-example/tree/part5-basic-template-application)
+Link to [part 5 branch](https://github.com/stealthness/flask-example/tree/part5-basic-template-application)
 
 ## Part 6
 In this part 
 - added stylesheet via a static file
 - change about to display three random user pages
 - added `base.html` template
-- Link to [part 6 branch](https://github.com/stealthness/flask-example/tree/part6-using-base-template-application)
+ 
+Link to [part 6 branch](https://github.com/stealthness/flask-example/tree/part6-using-base-template-application)
 
 ## Part 7
 In this part
 - added intial user list store on a 'user_data.csv'
-- added simple unit test for 'data_manager'
-- Link to [part 7 branch](https://github.com/stealthness/flask-example/tree/part7-adding-csv-application)
+- added simple unit test for 'data_manager' 
+ 
+Link to [part 7 branch](https://github.com/stealthness/flask-example/tree/part7-adding-csv-application)
 
 ## Part 8
 In this part
 - a page to all users using a table, with added css to style the table
+- made modification to header, created its own html file
+
+Link to [part 8 branch](https://github.com/stealthness/flask-example/tree/part8-adding-allusers-application)
