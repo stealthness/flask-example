@@ -35,4 +35,10 @@ In this part
 - added stylesheet via a static file
 - change about to display three random user pages
 - added `base.html` template
-- - Link to [part 6 branch](https://github.com/stealthness/flask-example/tree/part6-using-base-template-application)
+- Link to [part 6 branch](https://github.com/stealthness/flask-example/tree/part6-using-base-template-application)
+
+## Part 7
+In this part
+- added intial user list store on a 'user_data.csv'
+- added simple unit test for 'data_manager'
+- Link to [part 7 branch](https://github.com/stealthness/flask-example/tree/part7-adding-csv-application)

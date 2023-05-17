@@ -1,7 +1,11 @@
+import os
+
 class SimpleDataManager:
 
     def __init__(self):
         self.users = []
 
-    def load_users(self):
-        self.users = ['Ant', 'Bob', 'Cat', 'Dan', 'Emma', 'Fatima', 'Gregg', 'Hanns', 'Ingrid', 'Jules']
+    def load_users(self, filename):
+        with open(filename) as csv_file:
+            for name in csv_file:
+                self.users.append(name.strip())

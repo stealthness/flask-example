@@ -1,3 +1,4 @@
+import os
 from random import shuffle
 
 from flask import Flask, render_template, redirect, url_for
@@ -6,7 +7,7 @@ from flaskr.data_manager import SimpleDataManager
 
 app = Flask(__name__)
 data = SimpleDataManager()
-data.load_users()
+data.load_users(os.path.join('res', 'user_data.csv'))
 
 @app.route('/')
 @app.route('/index')
