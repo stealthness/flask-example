@@ -5,7 +5,7 @@ Part of this code and explination is modifyfied from https://flask.palletsprojec
 
 ## Codio notes
 This project was created to help student on AES course. Some small change that might be necessary. In `main_app.py` need
-to import `DataManager` by reove `flaskr.` from module address. This is becuase the root of the PyCharm project is one level above the root of a 
+to import `DataManager` by remove `flaskr.` from module address. This is becuase the root of the PyCharm project is one level above the root of a 
 codio VM box.
 
 ## Part 1
