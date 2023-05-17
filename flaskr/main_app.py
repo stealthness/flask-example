@@ -13,7 +13,9 @@ data.load_users(os.path.join('res', 'user_data.csv'))
 @app.route('/index', methods=(['POST', 'GET']))
 def get_home_page():
     if request.method == 'POST':
-        print("<1>")
+        user = escape(request.form['name'])
+        if user.title() in data.users:
+            return redirect(url_for('get_user_page', username=user.lower()))
     return render_template('index.html', title='Home Page')
 
 @app.route('/about')
