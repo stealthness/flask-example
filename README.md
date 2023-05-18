@@ -4,9 +4,7 @@ Creating a simple Flask Example project
 Part of this code and explination is modifyfied from https://flask.palletsprojects.com/en/2.3.x/
 
 ## Codio notes
-This project was created to help student on AES course. Some small change that might be necessary. In `main_app.py` need
-to import `DataManager` by remove `flaskr.` from module address. This is becuase the root of the PyCharm project is one level above the root of a 
-codio VM box.
+This project was created to help student on AES. Parts 1 to 8 have been corrected to align with codio expected file layout
 
 ## Part 1
 Creating the minimal Flask web-application [part 1 branch](https://github.com/stealthness/flask-example/tree/part1-minimal-application)
