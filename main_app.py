@@ -49,6 +49,16 @@ def get_all_users_page():
     return render_template("all_users.html", title="All Users Page", users=data.users)
 
 
+@app.route('/new_user', methods = ([ 'POST','GET']))
+def get_new_user_page():
+    if request.method == 'POST':
+        new_user = escape(request.form['name']).title()
+        if new_user in data.users or new_user == '':
+            return render_template('add_new_user_page.html')
+        data.users.append(new_user)
+        return redirect(url_for ('get_user_page', username=new_user.lower()))
+    return render_template('add_new_user_page.html', title="New User Page")
+
 if __name__ == "__main__":
     # app.run()
 
