@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from flaskr.data_manager import SimpleDataManager
+from data_manager import SimpleDataManager
 
 test_user_names = ['Ant', 'Bob', 'Cat', 'Dan', 'Emma', 'Fatima', 'Gregg', 'Hanns', 'Ingrid', 'Jules']
 
