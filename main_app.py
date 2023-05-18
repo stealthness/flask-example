@@ -7,7 +7,8 @@ from data_manager import SimpleDataManager
 
 app = Flask(__name__)
 data = SimpleDataManager()
-data.load_users(os.path.join('res', 'user_data.csv'))
+# data.load_users(os.path.join('res', 'user_data.csv'))
+data.load_user_from_db(os.path.join('res', 'full_user_data.csv'), os.path.join('res', 'user_db.db'))
 
 @app.route('/', methods=(['POST', 'GET']))
 @app.route('/index', methods=(['POST', 'GET']))
@@ -58,6 +59,8 @@ def get_new_user_page():
         if new_user in data.users or new_user == '':
             return render_template('add_new_user_page.html')
         data.users.append(new_user)
+        conn = data.get_db_connection(os.path.join('res', 'user_db.db'))
+        conn.execute(f'insert into users values("{new_user}", "to do ", "to dp");')
         return redirect(url_for ('get_user_page', username=new_user.lower()))
     return render_template('add_new_user_page.html', title="New User Page")
 
