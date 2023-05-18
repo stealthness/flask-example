@@ -2,7 +2,7 @@ from random import shuffle
 
 from flask import Flask, render_template, redirect, url_for
 from markupsafe import escape
-from flaskr.data_manager import SimpleDataManager
+from data_manager import SimpleDataManager
 
 app = Flask(__name__)
 data = SimpleDataManager()
