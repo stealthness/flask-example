@@ -16,6 +16,8 @@ def get_home_page():
         user = escape(request.form['name'])
         if user.title() in data.users:
             return redirect(url_for('get_user_page', username=user.lower()))
+        else:
+            return redirect(url_for('get_new_user_page'))
     return render_template('index.html', title='Home Page')
 
 @app.route('/about')
