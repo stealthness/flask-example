@@ -2,14 +2,5 @@
 
 {% block content %}
     <p>Welcome to the football supporter site, this is a demo of flask web application</p>
-
-    <div>
-        <p> Please enter a users name</p>
-      <form action = "/index" method = "post">
-         <p>Enter Name:</p>
-         <p><input type = "text" name = "name" value=""/></p>
-         <p><input type = "submit" value = "submit" /></p>
-      </form>
-
-    </div>
+     {% include 'get_name_form.html' %}
 {% endblock %}
