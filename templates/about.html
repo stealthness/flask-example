@@ -2,12 +2,27 @@
 
 {% block content %}
     <p>This flask example will create a football supporter site</p>
+
+    <h3>Warning pages</h3>
     <p>Test link to  <a href="/warn">error page</a></p>
+
+    <h3>Users Pages</h3>
     <p>Below is are links to three random registered users</p>
-    {% for user in users %}
-        <p>Test link to  <a href="/user/{{user}}">{{user.title()}}'s page</a></p>
-    {% endfor %}
+    <div class="box">
+        {% for user in users %}
+            <p>Test link to  <a href="/user/{{user}}">{{user.title()}}'s page</a></p>
+        {% endfor %}
+    </div>
+
     <p>To see all users <a href="/all_users">link</a></p>
     <p>Test link to  <a href="/user/kate">Kate's page</a> (redirect to the error page)</p>
-    <p>A new user <a href="/new_user">link</a> </p>
+
+    <h3>Club pages</h3>
+    <p>Link to clubs </p>
+
+<!--    <h3>Clubs</h3>-->
+<!--    {% for club in clubs %}-->
+<!--        <p>Test link to  <a href="/club/{{club}}">{{club}}'s page</a></p>-->
+<!--    {% endfor %}-->
+
 {% endblock %}
