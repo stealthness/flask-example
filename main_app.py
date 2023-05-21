@@ -5,9 +5,13 @@ from flask import Flask, render_template, redirect, url_for, request
 from markupsafe import escape
 from data_manager import SimpleDataManager
 
+db_filename = os.path.join('res', 'user_db.db')
+csv_users_filename = os.path.join('res', 'full_user_data.csv')
+
 app = Flask(__name__)
 data = SimpleDataManager()
 data.load_users(os.path.join('res', 'user_data.csv'))
+data.load_user_from_db(csv_users_filename, db_filename)
 
 @app.route('/', methods=(['POST', 'GET']))
 @app.route('/index', methods=(['POST', 'GET']))
