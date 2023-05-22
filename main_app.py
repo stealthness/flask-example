@@ -51,7 +51,7 @@ def get_user_page(username):
     club, stadium, location = data.get_user_detail(safe_username, db_filename)
     print(f'{club} {stadium} {location}')
 
-    return render_template('user_page.html', title='User Page' ,username=safe_username)
+    return render_template('user_page.html', title='User Page' ,username=safe_username, club=club, location=location)
 
 
 @app.route('/all_users')

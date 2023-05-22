@@ -15,28 +15,36 @@ class SimpleDataManager:
 
     def create_tables(self, db_filename):
         cursor = sqlite3.connect(db_filename).cursor()
-        cursor.execute('create table if not exists users(name text not null, location text,club text);')
+        cursor.execute('drop table users;')
+        cursor.execute('create table if not exists users(name text primary key, location text,club text);')
 
     def execute(self, db_filename, sql=None):
         cursor = sqlite3.connect(db_filename)
-        return cursor.execute(f'select * from users');
+        return cursor.execute(f'select * from users;');
 
     def load_user_from_db(self, csv_filename, db_filename):
         with open(csv_filename, 'r') as csv_file:
-            cursor = sqlite3.connect(db_filename).cursor()
-            for line in csv_file:
-                name, location, club = line.split(',')
-                self.users.append(name)
+            with sqlite3.connect(db_filename) as db:
+                cursor = db.cursor()
+                for line in csv_file:
+                    name, location, club = line.split(',')
+                    self.users.append(name)
 
-                # print(db.execute('select * from users').fetchall())
-                cursor.execute(f'insert into users values ("{name}", "{location}", "{club}");')
+                    cursor.execute(f'insert into users values ("{name}", "{location}", "{club}");')
 
-            print(cursor.execute('select * from users').fetchall())
+            print(cursor.execute(f'select Location from users where name="{name}"').fetchall())
+            print(cursor.execute(f"select * from users where name='{name}'").fetchall())
 
-            print(cursor.execute(f"select * from users where name='Vince'").fetchall())
+    def get_user_detail(self, user_name, db_filename):
 
-    def get_user_detail(self, user_name, filename):
-        db = sqlite3.connect(filename)
-        print(db.execute('select * from users').fetchall())
-        print(db.execute(f"select * from users where name='Vince'").fetchall())
-        return "Arsenal", "Highbury", "London"
+        with sqlite3.connect(db_filename) as db:
+
+            cursor = db.cursor()
+
+            # print(cursor.execute('.tables').fetchall())
+            sql_output = cursor.execute(f"select * from users where name='{user_name}'").fetchall()
+            print(sql_output)
+            print(type(sql_output[0]))
+            _, location, club = sql_output[0]
+
+            return club, "...", location
