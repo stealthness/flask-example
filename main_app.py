@@ -10,7 +10,7 @@ csv_users_filename = os.path.join('res', 'full_user_data.csv')
 
 app = Flask(__name__)
 data = SimpleDataManager()
-data.load_users(os.path.join('res', 'user_data.csv'))
+data.create_tables(db_filename)
 data.load_user_from_db(csv_users_filename, db_filename)
 
 @app.route('/', methods=(['POST', 'GET']))
@@ -22,6 +22,7 @@ def get_home_page():
             return redirect(url_for('get_user_page', username=user.lower()))
         else:
             return redirect(url_for('get_new_user_page'))
+
     return render_template('index.html', title='Home Page')
 
 @app.route('/about')
@@ -47,11 +48,17 @@ def get_user_page(username):
     if not safe_username.title() in data.users:
         return redirect(url_for('get_warning_page'))
 
+    club, stadium, location = data.get_user_detail(safe_username, db_filename)
+    print(f'{club} {stadium} {location}')
+
     return render_template('user_page.html', title='User Page' ,username=safe_username)
 
 
 @app.route('/all_users')
 def get_all_users_page():
+
+    print(data.execute(db_filename, sql='select name from users').fetchall())
+
     return render_template("all_users.html", title="All Users Page", users=data.users)
 
 
