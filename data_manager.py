@@ -1,28 +1,27 @@
 import os
 import sqlite3
+from markupsafe import escape
 
 
 class SimpleDataManager:
 
     def __init__(self):
         self.users = []
+        self.clubs = []
 
-
-    def load_users(self, filename):
-        with open(filename) as csv_file:
-            for name in csv_file:
-                self.users.append(name.strip())
 
     def create_tables(self, db_filename):
         cursor = sqlite3.connect(db_filename).cursor()
         cursor.execute('drop table users;')
-        cursor.execute('create table if not exists users(name text primary key, location text,club text);')
+        cursor.execute('drop table clubs;')
+        cursor.execute('create table if not exists users(user_name text primary key, location text,club text);')
+        cursor.execute('create table if not exists clubs(club_name text primary key, stadium text, league text);')
 
     def execute(self, db_filename, sql=None):
         cursor = sqlite3.connect(db_filename)
         return cursor.execute(f'select * from users;');
 
-    def load_user_from_db(self, csv_filename, db_filename):
+    def load_users_from_db(self, csv_filename, db_filename):
         with open(csv_filename, 'r') as csv_file:
             with sqlite3.connect(db_filename) as db:
                 cursor = db.cursor()
@@ -30,21 +29,62 @@ class SimpleDataManager:
                     name, location, club = line.split(',')
                     self.users.append(name)
 
-                    cursor.execute(f'insert into users values ("{name}", "{location}", "{club}");')
+                    cursor.execute(f'insert into users values ("{name}", "{location}", "{club.strip()}");')
 
-            print(cursor.execute(f'select Location from users where name="{name}"').fetchall())
-            print(cursor.execute(f"select * from users where name='{name}'").fetchall())
+            print(cursor.execute(f'select * from users').fetchall())
+
+
+    def load_clubs_from_db(self, csv_filename, db_filename):
+        with open(csv_filename, 'r') as csv_file:
+            with sqlite3.connect(db_filename) as db:
+                cursor = db.cursor()
+                for line in csv_file:
+                    name, stadium, league = line.strip().split('\t')
+                    self.clubs.append(name)
+
+                    cursor.execute(f'insert into clubs values ("{name}", "{stadium}", "{league}");')
+
+            print(cursor.execute(f'select club_name, stadium from clubs').fetchall())
+
+    def add_new_user(self, new_user, location, club, db_filename):
+        if club not in self.clubs:
+            print('<4>')
+            return
+
+        with sqlite3.connect(db_filename) as db:
+            cursor = db.cursor()
+            cursor.execute(f'insert into users values("{new_user}","{location}" ,"{club}" )').fetchall()
+            self.users.append(escape(new_user))
 
     def get_user_detail(self, user_name, db_filename):
+        with sqlite3.connect(db_filename) as db:
+            cursor = db.cursor()
+            sql_output = cursor.execute(f'select * from users where user_name="{user_name}"').fetchall()
+            print(f'<1>output:{sql_output}')
+            _, location, club= sql_output[0]
+
+            return location, club.strip('\n')
+
+    def get_club_detail(self, club_name, db_filename):
 
         with sqlite3.connect(db_filename) as db:
 
             cursor = db.cursor()
+            print(f"clubname: {club_name}")
+            sql_output = cursor.execute(f'select * from clubs where club_name="{club_name}"').fetchall()
+            print(f'<2>output:{sql_output}')
+            _, stadium, league = sql_output[0]
 
-            # print(cursor.execute('.tables').fetchall())
-            sql_output = cursor.execute(f"select * from users where name='{user_name}'").fetchall()
-            print(sql_output)
-            print(type(sql_output[0]))
-            _, location, club = sql_output[0]
+            return stadium, league
 
-            return club, "...", location
+    def get_tables(self, db_filename):
+        with sqlite3.connect(db_filename) as db:
+            cursor = db.cursor()
+            html = f"""
+            <p>{self.users}</p>
+            <p>{self.clubs}</p>
+            <p>{str(cursor.execute(f'select * from users').fetchall())}</p>
+            <p></p>
+            <p>{str(cursor.execute(f'select * from clubs').fetchall())}</p>"""
+
+            return html

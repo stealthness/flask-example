@@ -2,6 +2,16 @@
 
 {% block content %}
     <p>Welcome {{username.title()}}, This is your page</p>
-    <p>Your location is {{location.title()}}</p>
-    <p>you support {{club}}</p>
+    {% if location == 'none' %}
+        <p>You location has yet to be given</p>
+    {% else %}
+        <p>Your location is {{location.title()}}</p>
+    {% endif %}
+
+
+    {% if club == 'none' %}
+        <p>You do not currently support any club</p>
+    {% else %}
+        <p>you support {{club}}, which is in the {{league}}</p>
+    {% endif %}
 {% endblock %}
