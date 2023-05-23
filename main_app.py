@@ -65,7 +65,7 @@ def get_warning_page(e=None):
 @app.route('/user/<string:username>')
 def get_user_page(username):
     """
-
+    creates and returns a user page, detailing any of  their location and club support
     :param username:
     :return:
     """
@@ -73,13 +73,12 @@ def get_user_page(username):
     if safe_username == 'all_users':
         return redirect(url_for("get_all_users_page"))
     if not safe_username.title() in data.get_user_list(db_filename):
-        return redirect(url_for('get_warning_page'))
+        return redirect(url_for('get_warning_page', e="Users ot found"))
     stadium = None
     league = None
     location, club = data.get_user_detail(safe_username.title(), db_filename)
     if location is None or location == '':
         location = 'none'
-
 
     if club not in data.clubs:
         club = "none"
@@ -88,7 +87,7 @@ def get_user_page(username):
 
     print(f'{club}, {stadium}, {location}, {league}')
 
-    return render_template('user_page.html', title='User Page' ,username=safe_username, club=club, location=location, league=league)
+    return render_template('user_page.html', title='User Page', username=safe_username, club=club, location=location, league=league)
 
 
 @app.route('/all_users')
@@ -120,6 +119,5 @@ def get_tables():
 
 if __name__ == "__main__":
     # app.run()
-
     # Optional, host address often required if running on a VM
     app.run(debug=True, host="0.0.0.0")
