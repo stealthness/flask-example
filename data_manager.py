@@ -15,9 +15,9 @@ class SimpleDataManager:
         cursor.execute('create table if not exists users(user_name text primary key, location text,club text);')
         cursor.execute('create table if not exists clubs(club_name text primary key, stadium text, league text);')
 
-    def execute(self, db_filename, sql=None):
+    def execute_sql(self, db_filename, sql):
         cursor = sqlite3.connect(db_filename)
-        return cursor.execute(f'select * from users;');
+        return cursor.execute(sql).fetchall();
 
     def load_users_from_db(self, csv_filename, db_filename):
         with open(csv_filename, 'r') as csv_file:

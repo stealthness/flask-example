@@ -1,5 +1,6 @@
 import os
 from random import shuffle
+import re
 
 from flask import Flask, render_template, redirect, url_for, request
 from markupsafe import escape
@@ -14,6 +15,8 @@ data = SimpleDataManager()
 data.create_tables(db_filename)
 data.load_users_from_db(csv_users_filename, db_filename)
 data.load_clubs_from_db(csv_clubs_filename, db_filename)
+
+CLEANR = re.compile("('),")
 
 @app.route('/', methods=(['POST', 'GET']))
 @app.route('/index', methods=(['POST', 'GET']))
@@ -68,8 +71,8 @@ def get_user_page(username):
 
 @app.route('/all_users')
 def get_all_users_page():
-
-    print(data.execute(db_filename, sql='select name from users').fetchall())
+    users = [item[0] for item  in data.execute_sql(db_filename, sql='select user_name from users')]
+    print(users)
 
     return render_template("all_users.html", title="All Users Page", users=data.users)
 
