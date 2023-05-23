@@ -36,17 +36,17 @@ def get_home_page():
 
 
 @app.route('/about')
-def get_about_page():
+def get_about_page(size=3):
     """
     creates and returns the about page
     :return: html text
     """
     users = []
     for _ in range(3):
-        shuffle(data.users)
-        users = data.users[:3]
+        users = data.get_user_list(db_filename)
+        shuffle(users)
 
-    return render_template('about.html', title='Home Page', users=users)
+    return render_template('about.html', title='Home Page', users=users[:size])
 
 
 @app.errorhandler(404)
@@ -72,7 +72,7 @@ def get_user_page(username):
     safe_username = escape(username).strip()
     if safe_username == 'all_users':
         return redirect(url_for("get_all_users_page"))
-    if not safe_username.title() in data.users:
+    if not safe_username.title() in data.get_user_list(db_filename):
         return redirect(url_for('get_warning_page'))
     stadium = None
     league = None
