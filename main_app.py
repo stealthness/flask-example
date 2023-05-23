@@ -71,10 +71,7 @@ def get_user_page(username):
 
 @app.route('/all_users')
 def get_all_users_page():
-    users = [item[0] for item  in data.execute_sql(db_filename, sql='select user_name from users')]
-    print(users)
-
-    return render_template("all_users.html", title="All Users Page", users=data.users)
+    return render_template("all_users.html", title="All Users Page", users=data.get_user_list(db_filename))
 
 
 @app.route('/new_user', methods = ([ 'POST','GET']))

@@ -32,6 +32,10 @@ class SimpleDataManager:
             print(cursor.execute(f'select * from users').fetchall())
 
 
+    def get_user_list(self, db_filename):
+
+        return [item[0] for item  in self.execute_sql(db_filename, sql='select user_name from users')]
+
     def load_clubs_from_db(self, csv_filename, db_filename):
         with open(csv_filename, 'r') as csv_file:
             with sqlite3.connect(db_filename) as db:
