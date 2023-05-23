@@ -9,8 +9,8 @@ class SimpleDataManager:
 
     def create_tables(self, db_filename):
         cursor = sqlite3.connect(db_filename).cursor()
-        cursor.execute('drop table users;')
-        cursor.execute('drop table clubs;')
+        cursor.execute('drop table if exists users;')
+        cursor.execute('drop table if exists clubs;')
         cursor.execute('create table if not exists users(user_name text primary key, location text,club text);')
         cursor.execute('create table if not exists clubs(club_name text primary key, stadium text, league text);')
 
