@@ -27,7 +27,7 @@ def get_home_page():
     """
     if request.method == 'POST':
         user = escape(request.form['name'])
-        if user.title() in data.users:
+        if user.title() in data.get_user_list(db_filename):
             return redirect(url_for('get_user_page', username=user.lower()))
         else:
             return redirect(url_for('get_new_user_page'))
@@ -102,7 +102,7 @@ def get_new_user_page():
         new_user = escape(request.form['name']).strip().title()
         location = escape(request.form['location']).title()
         club = escape(request.form['club']).title()
-        if new_user in data.users or new_user == '':
+        if new_user in data.get_user_list() or new_user == '':
             print(new_user)
             return render_template('add_new_user_page.html')
         if not club in data.clubs:

@@ -4,7 +4,6 @@ from markupsafe import escape
 class SimpleDataManager:
 
     def __init__(self):
-        self.users = []
         self.clubs = []
 
 
@@ -25,8 +24,6 @@ class SimpleDataManager:
                 cursor = db.cursor()
                 for line in csv_file:
                     name, location, club = line.split(',')
-                    self.users.append(name)
-
                     cursor.execute(f'insert into users values ("{name}", "{location}", "{club.strip()}");')
 
             print(cursor.execute(f'select * from users').fetchall())
@@ -63,7 +60,6 @@ class SimpleDataManager:
         with sqlite3.connect(db_filename) as db:
             cursor = db.cursor()
             cursor.execute(f'insert into users values("{new_user}","{location}" ,"{club}" )').fetchall()
-            self.users.append(new_user)
 
     def get_user_detail(self, user_name, db_filename):
         with sqlite3.connect(db_filename) as db:
@@ -89,8 +85,6 @@ class SimpleDataManager:
         with sqlite3.connect(db_filename) as db:
             cursor = db.cursor()
             html = f"""
-            <p>{self.users}</p>
-            <p>{self.clubs}</p>
             <p>{str(cursor.execute(f'select * from users').fetchall())}</p>
             <p>{str(cursor.execute(f'select * from clubs').fetchall())}</p>"""
 
