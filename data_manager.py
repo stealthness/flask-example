@@ -1,7 +1,9 @@
 import os
 import sqlite3
+import re
 from markupsafe import escape
 
+CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
 
 class SimpleDataManager:
 
@@ -47,14 +49,21 @@ class SimpleDataManager:
             print(cursor.execute(f'select club_name, stadium from clubs').fetchall())
 
     def add_new_user(self, new_user, location, club, db_filename):
+        """
+        Adds a new user, it assumes that all have been checked as safe
+        :param new_user:
+        :param location:
+        :param club:
+        :param db_filename:
+        :return:
+        """
         if club not in self.clubs:
-            print('<4>')
             return
 
         with sqlite3.connect(db_filename) as db:
             cursor = db.cursor()
             cursor.execute(f'insert into users values("{new_user}","{location}" ,"{club}" )').fetchall()
-            self.users.append(escape(new_user))
+            self.users.append(new_user)
 
     def get_user_detail(self, user_name, db_filename):
         with sqlite3.connect(db_filename) as db:
@@ -62,7 +71,6 @@ class SimpleDataManager:
             sql_output = cursor.execute(f'select * from users where user_name="{user_name}"').fetchall()
             print(f'<1>output:{sql_output}')
             _, location, club= sql_output[0]
-
             return location, club.strip('\n')
 
     def get_club_detail(self, club_name, db_filename):
@@ -84,7 +92,6 @@ class SimpleDataManager:
             <p>{self.users}</p>
             <p>{self.clubs}</p>
             <p>{str(cursor.execute(f'select * from users').fetchall())}</p>
-            <p></p>
             <p>{str(cursor.execute(f'select * from clubs').fetchall())}</p>"""
 
             return html
