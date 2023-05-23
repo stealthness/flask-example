@@ -1,9 +1,5 @@
-import os
 import sqlite3
-import re
 from markupsafe import escape
-
-CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
 
 class SimpleDataManager:
 
