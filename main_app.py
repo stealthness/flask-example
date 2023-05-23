@@ -21,6 +21,10 @@ CLEANR = re.compile("('),")
 @app.route('/', methods=(['POST', 'GET']))
 @app.route('/index', methods=(['POST', 'GET']))
 def get_home_page():
+    """
+    Creates and returns the home page
+    :return: html text
+    """
     if request.method == 'POST':
         user = escape(request.form['name'])
         if user.title() in data.users:
@@ -30,8 +34,13 @@ def get_home_page():
 
     return render_template('index.html', title='Home Page')
 
+
 @app.route('/about')
 def get_about_page():
+    """
+    creates and returns the about page
+    :return: html text
+    """
     users = []
     for _ in range(3):
         shuffle(data.users)
@@ -40,13 +49,26 @@ def get_about_page():
     return render_template('about.html', title='Home Page', users=users)
 
 
+@app.errorhandler(404)
 @app.route('/warn')
-def get_warning_page(message=''):
-    return render_template('error_page.html', title='Error Page', message=message)
+def get_warning_page(e=None):
+    """
+    Returns customized error page
+    :param e:
+    :return: html text
+    """
+    if e is None:
+        e = "Problem unknown"
+    return render_template('error_page.html', title='Error Page', message=e)
 
 
 @app.route('/user/<string:username>')
 def get_user_page(username):
+    """
+
+    :param username:
+    :return:
+    """
     safe_username = escape(username).strip()
     if safe_username == 'all_users':
         return redirect(url_for("get_all_users_page"))
