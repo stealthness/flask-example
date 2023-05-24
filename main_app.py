@@ -80,12 +80,16 @@ def get_user_page(username):
     if location is None or location == '':
         location = 'none'
 
-    if club not in data.clubs:
+    if club not in data.cached_clubs:
         club = "none"
     else:
         stadium, league = data.get_club_detail(club.title(), db_filename)
 
     print(f'{club}, {stadium}, {location}, {league}')
+
+    BASE_URL = 'https://nominatim.openstreetmap.org/search?format=json'
+
+    param = 'amenity=EmeritesStadium'
 
     return render_template('user_page.html', title='User Page', username=safe_username, club=club, location=location, league=league)
 
@@ -104,7 +108,7 @@ def get_new_user_page():
         if new_user in data.get_user_list() or new_user == '':
             print(new_user)
             return render_template('add_new_user_page.html')
-        if not club in data.clubs:
+        if not club in data.cached_clubs:
             print(club)
             return render_template('add_new_user_page.html')
         print(f'<3> {new_user} {location} {club}')

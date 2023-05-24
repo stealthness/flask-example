@@ -1,10 +1,14 @@
+from dataclasses import dataclass
 import sqlite3
 from markupsafe import escape
 
+
+@dataclass
 class SimpleDataManager:
 
-    def __init__(self):
-        self.clubs = []
+    cached_users = None
+    cached_clubs = None
+
 
 
     def create_tables(self, db_filename):
@@ -19,19 +23,22 @@ class SimpleDataManager:
         return cursor.execute(sql).fetchall();
 
     def load_users_from_db(self, csv_filename, db_filename):
+        self.cached_users = []
         with open(csv_filename, 'r') as csv_file:
             with sqlite3.connect(db_filename) as db:
                 cursor = db.cursor()
                 for line in csv_file:
                     name, location, club = line.split(',')
+                    self.cached_users.append(name)
                     cursor.execute(f'insert into users values ("{name}", "{location}", "{club.strip()}");')
 
             print(cursor.execute(f'select * from users').fetchall())
 
-
     def get_user_list(self, db_filename):
-
-        return [item[0] for item  in self.execute_sql(db_filename, sql='select user_name from users')]
+        if self.cached_users:
+            return self.cached_users
+        else:
+            return [item[0] for item in self.execute_sql(db_filename, sql='select user_name from users')]
 
     def load_clubs_from_db(self, csv_filename, db_filename):
         with open(csv_filename, 'r') as csv_file:
@@ -39,7 +46,8 @@ class SimpleDataManager:
                 cursor = db.cursor()
                 for line in csv_file:
                     name, stadium, league = line.strip().split('\t')
-                    self.clubs.append(name)
+                    if self.cached_clubs:
+                        self.cached_clubs.append(name)
 
                     cursor.execute(f'insert into clubs values ("{name}", "{stadium}", "{league}");')
 
@@ -54,7 +62,7 @@ class SimpleDataManager:
         :param db_filename:
         :return:
         """
-        if club not in self.clubs:
+        if club not in self.cached_clubs:
             return
 
         with sqlite3.connect(db_filename) as db:
@@ -66,13 +74,12 @@ class SimpleDataManager:
             cursor = db.cursor()
             sql_output = cursor.execute(f'select * from users where user_name="{user_name}"').fetchall()
             print(f'<1>output:{sql_output}')
-            _, location, club= sql_output[0]
+            _, location, club = sql_output[0]
             return location, club.strip('\n')
 
     def get_club_detail(self, club_name, db_filename):
 
         with sqlite3.connect(db_filename) as db:
-
             cursor = db.cursor()
             print(f"clubname: {club_name}")
             sql_output = cursor.execute(f'select * from clubs where club_name="{club_name}"').fetchall()
