@@ -105,7 +105,7 @@ def get_new_user_page():
         new_user = escape(request.form['name']).strip().title()
         location = escape(request.form['location']).title()
         club = escape(request.form['club']).title()
-        if new_user in data.get_user_list() or new_user == '':
+        if new_user in data.get_user_list(db_filename) or new_user == '':
             print(new_user)
             return render_template('add_new_user_page.html')
         if not club in data.cached_clubs:
